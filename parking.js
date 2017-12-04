@@ -18,37 +18,57 @@ class Parking {
      * @param {number} capacidad numero de coches que entra en el parking
      */
     constructor(capacidad) {
-        this._capacidad=capacidad
+        this._capacidad = capacidad
         this._tunellavado = []
         this._coches = []
     }
-/**
- * @param {object} coche coche que metemos en el parking
- * @return {number} -1 parking lleno; 0 entra en el parking
- */
-    MeterCoche(coche){
-        if(this._capacidad>0){
-        // (this._capacidad-this._coches.length-this._tunellavado.length)>0){ // si la capacidad -Array de coches -array de tunellavado es mayor que 0.
-        this._capacidad --; //decremento la capacidad
-            if(coche.lavado==true){ 
+    /**
+     * @param {object} coche coche que metemos en el parking
+     * @return {number} -1 parking lleno; 0 entra en el parking
+     */
+    MeterCoche(coche) {
+        if (this._capacidad > 0) {
+            // (this._capacidad-this._coches.length-this._tunellavado.length)>0){ // si la capacidad -Array de coches -array de tunellavado es mayor que 0.
+            this._capacidad--; //decremento la capacidad
+            if (coche.lavado == true) {
                 this._tunellavado.push(coche.matricula)
-            }else{
+            } else {
                 this._coches.push(coche.matricula)
             }
             return 0;
             // console.log("entran los coches en el parking",)
-        }else{
+        } else {
             return -1;
             // console.log("no entra ningun coche en el parking",)
         }
-        
+
+    }
+    /**
+     * @description Nos devuelve true o false
+     * @param {string} matricula matricula de coche a buscar
+     * @returns {boolean}
+     */
+    Buscar(matricula) {
+        if (this._coches.indexOf(matricula)>=0) {
+            return true
+        } else {
+            if (this._tunellavado.indexOf(matricula)>=0) {
+                return true;
+            } else {
+                return false
+            }
+
+        }
     }
 }
 
-let parking= new Parking(2);
-let coche1={
-    matricula:"PO23546",
-    lavado:true
+let parking = new Parking(2);
+let coche1 = {
+    matricula: "PO23546",
+    lavado: true
 }
 console.log(parking.MeterCoche(coche1))
 console.log(parking)
+
+console.log(parking.Buscar("PO23546"))
+console.log("salir")
